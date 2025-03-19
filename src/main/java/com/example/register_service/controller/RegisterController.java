@@ -20,8 +20,8 @@ public class RegisterController {
 
     @PostMapping("/register")
     public ResponseEntity<ApiResponse<RegisterUserResponse>> registerUser(@RequestBody RegisterUserRequest request) {
-        User user = registerService.registerUser(request.getUser(), request.getListSubjectId());
+        RegisterUserResponse userResponse = registerService.registerUser(request.getUser(), request.getListSubjectId());
         return ResponseEntity.ok(new ApiResponse<>("Success", "Đăng ký user thành công",
-                RegisterUserResponse.responseWithSubject(user)));
+                userResponse));
     }
 }

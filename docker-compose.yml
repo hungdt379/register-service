@@ -41,7 +41,7 @@ services:
       - "9092:9092"    # Kết nối từ trong Docker network
       - "29092:29092"  # Kết nối từ máy host
     healthcheck:
-      test: [ "CMD", "kafka-topics", "--list", "--bootstrap-server", "localhost:9092" ]
+      test: [ "CMD", "kafka-topics", "--list", "--bootstrap-server", "kafka:9092" ]
       interval: 10s
       timeout: 5s
       retries: 10

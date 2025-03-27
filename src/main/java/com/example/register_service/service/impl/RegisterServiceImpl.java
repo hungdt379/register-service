@@ -45,7 +45,7 @@ public class RegisterServiceImpl implements RegisterService {
         RegisterUserResponse userResponse = RegisterUserResponse.responseWithSubject(userRepository.save(user));
         logger.info("Register successfully: {}", gson.toJson(userResponse));
 
-        kafkaProducer.sendMessage("send-email", userResponse.getEmail());
+//        kafkaProducer.sendMessage("send-email", userResponse.getEmail());
         return userResponse;
     }
 

@@ -20,16 +20,16 @@ services:
       - app-network
 
   # Kafka Zookeeper (bắt buộc)
-  zookeeper:
-    image: confluentinc/cp-zookeeper:7.0.0
-    container_name: zookeeper
-    ports:
-      - "2181:2181"
-    environment:
-      ZOOKEEPER_CLIENT_PORT: 2181
-      ZOOKEEPER_TICK_TIME: 2000
-    networks:
-      - app-network
+#  zookeeper:
+#    image: confluentinc/cp-zookeeper:7.0.0
+#    container_name: zookeeper
+#    ports:
+#      - "2181:2181"
+#    environment:
+#      ZOOKEEPER_CLIENT_PORT: 2181
+#      ZOOKEEPER_TICK_TIME: 2000
+#    networks:
+#      - app-network
 
     # Kafka Broker
 #  kafka:
@@ -60,15 +60,15 @@ services:
   send-email-service:
     build: ./send-email-service
     depends_on:
-      kafka:
-        condition: service_healthy
+#      kafka:
+#        condition: service_healthy
       db:
         condition: service_healthy
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/postgres
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: 0
-      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+#      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
     ports:
       - "8085:8080"
     networks:
@@ -77,15 +77,15 @@ services:
   register-service:
     build: ./register-service
     depends_on:
-      kafka:
-        condition: service_healthy
+#      kafka:
+#        condition: service_healthy
       db:
         condition: service_healthy
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/postgres
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: 0
-      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+#      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
     ports:
       - "8080:8080"
     networks:

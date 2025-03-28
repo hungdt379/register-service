@@ -24,7 +24,6 @@ public class Subject {
     private String subjectName;
 
     @ManyToMany(mappedBy = "subjects", fetch = FetchType.LAZY)
-    @JsonIgnoreProperties("subjects")
     private Set<User> users = new HashSet<>();
 
     public Long getId() {

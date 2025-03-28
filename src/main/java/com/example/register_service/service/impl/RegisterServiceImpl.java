@@ -5,6 +5,7 @@ import com.example.register_service.entity.User;
 import com.example.register_service.kafka.KafkaProducer;
 import com.example.register_service.repository.SubjectRepository;
 import com.example.register_service.repository.UserRepository;
+import com.example.register_service.response.GetAllUserResponse;
 import com.example.register_service.response.RegisterUserResponse;
 import com.example.register_service.service.RegisterService;
 import com.google.gson.Gson;
@@ -16,6 +17,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class RegisterServiceImpl implements RegisterService {
@@ -45,8 +47,15 @@ public class RegisterServiceImpl implements RegisterService {
         RegisterUserResponse userResponse = RegisterUserResponse.responseWithSubject(userRepository.save(user));
         logger.info("Register successfully: {}", gson.toJson(userResponse));
 
-//        kafkaProducer.sendMessage("send-email", userResponse.getEmail());
+        kafkaProducer.sendMessage("send-email", userResponse.getEmail());
         return userResponse;
+    }
+
+    @Override
+    public List<GetAllUserResponse> getAllUser() {
+        return userRepository.findAll().stream()
+                .map(GetAllUserResponse::responseWithSubject)
+                .collect(Collectors.toList());
     }
 
 }

@@ -20,7 +20,7 @@ public class SubjectController {
 
     @GetMapping("/get-all")
     public ResponseEntity<ApiResponse<List<GetAllSubjectReponse>>> getAllSubject() {
-        return ResponseEntity.ok(new ApiResponse<>("Success", "Successfully",
+        return ResponseEntity.ok(new ApiResponse<>(false, "Successfully",
                 subjectService.getAllSubject().stream().map(GetAllSubjectReponse::responseWithUser).collect(Collectors.toList())));
     }
 

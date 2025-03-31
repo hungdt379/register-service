@@ -21,14 +21,14 @@ public class RegisterController {
     @PostMapping("/register")
     public ResponseEntity<ApiResponse<RegisterUserResponse>> registerUser(@RequestBody RegisterUserRequest request) {
         RegisterUserResponse userResponse = registerService.registerUser(request.getUser(), request.getListSubjectId());
-        return ResponseEntity.ok(new ApiResponse<>("Success", "Đăng ký user thành công",
+        return ResponseEntity.ok(new ApiResponse<>(false, "User register successfully",
                 userResponse));
     }
 
     @GetMapping("/user/all")
     public ResponseEntity<ApiResponse<List<GetAllUserResponse>>> getAllUser() {
         List<GetAllUserResponse> allUserResponses = registerService.getAllUser();
-        return ResponseEntity.ok(new ApiResponse<>("Success", "Successfully",
+        return ResponseEntity.ok(new ApiResponse<>(false, "Successfully",
                 allUserResponses));
     }
 }

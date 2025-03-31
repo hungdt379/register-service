@@ -38,12 +38,21 @@ public class RegisterServiceImpl implements RegisterService {
 
     @Override
     public RegisterUserResponse registerUser(User user, List<Long> listSubjectId) {
+
+        String username = user.getUsername();
+        User existedUser = userRepository.findByUsername(username);
+        if (existedUser != null) {
+            throw new RuntimeException("username = " + username + " was existed");
+        }
+
         if (CollectionUtils.isEmpty(listSubjectId)) {
             listSubjectId = new ArrayList<>();
         }
 
         List<Subject> subjects = subjectRepository.findAllByIds(listSubjectId);
         user.getSubjects().addAll(subjects);
+
+
         RegisterUserResponse userResponse = RegisterUserResponse.responseWithSubject(userRepository.save(user));
         logger.info("Register successfully: {}", gson.toJson(userResponse));
 

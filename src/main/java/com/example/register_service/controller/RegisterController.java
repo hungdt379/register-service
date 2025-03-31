@@ -7,10 +7,12 @@ import com.example.register_service.response.GetAllUserResponse;
 import com.example.register_service.response.RegisterUserResponse;
 import com.example.register_service.service.RegisterService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
@@ -30,5 +32,20 @@ public class RegisterController {
         List<GetAllUserResponse> allUserResponses = registerService.getAllUser();
         return ResponseEntity.ok(new ApiResponse<>(false, "Successfully",
                 allUserResponses));
+    }
+
+    @GetMapping("/user/only")
+    public ResponseEntity<ApiResponse<List<GetAllUserResponse>>> getAllUserWithoutSubject(@RequestParam int pageIndex, @RequestParam int pageSize) {
+        Page<User> allUserResponses = registerService.getAllUserWithoutSubject(pageIndex, pageSize);
+
+        return ResponseEntity.ok(new ApiResponse<>(
+                false,
+                "Successfully",
+                allUserResponses
+                        .getContent()
+                        .stream()
+                        .map(GetAllUserResponse::fromEntity)
+                        .collect(Collectors.toList()),
+                pageIndex, pageSize, allUserResponses.getTotalPages()));
     }
 }

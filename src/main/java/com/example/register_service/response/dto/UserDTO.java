@@ -1,5 +1,6 @@
 package com.example.register_service.response.dto;
 
+import com.example.register_service.annotation.mask_phone.MarkPhone;
 import com.example.register_service.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,6 +14,8 @@ public class UserDTO {
     private String username;
     private String name;
     private String email;
+
+    @MarkPhone
     private String phone;
 
     // Chuyển đổi từ User sang UserDTO
